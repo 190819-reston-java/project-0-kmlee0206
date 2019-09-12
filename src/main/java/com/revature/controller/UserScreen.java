@@ -12,7 +12,7 @@ import com.revature.service.Withdraw;
 public class UserScreen {
 	
 	private static Scanner sc = new Scanner(System.in);
-	public static Logger logger = Logger.getLogger(UserScreen.class);
+	private static Logger logger = Logger.getLogger(UserScreen.class);
 	
 	private static int invalidOptionCounter = 0;
 	//private static int invalidPwdCounter = 0;    //make number of tries for password!
