@@ -70,7 +70,7 @@ public class UserScreen {
 			Withdraw.withdraw(withdrawAmt);
 			System.out.println("Your balance after withdraw is: $" + Balance.currentBalance());
 			System.out.println("");
-			logger.info("User made a withdrawl of " + withdrawAmt);
+			logger.info("User made a withdrawal of " + withdrawAmt);
 			break;
 		case "3": //deposit
 			System.out.print("Enter amount to deposit: $");
@@ -90,7 +90,7 @@ public class UserScreen {
 			System.out.println("Invalid option!");
 			invalidOptionCounter++;
 			logger.debug("User entered an invalid option: " + userOption);
-			logger.debug("User inputed invalid option " + invalidOptionCounter + "times");
+			logger.debug("User inputed invalid option " + invalidOptionCounter + " times");
 			
 			System.out.println("You have " + (5 - invalidOptionCounter) + " attempts left before app crashes!");
 			System.out.println("");
