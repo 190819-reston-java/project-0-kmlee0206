@@ -1,21 +1,22 @@
 package com.revature.controller;
 
+import java.text.NumberFormat;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
 
-import com.revature.model.Password;
-import com.revature.model.Username;
-import com.revature.service.Balance;
-import com.revature.service.Deposit;
-import com.revature.service.Withdraw;
+
+import com.revature.service.Transactions;
 
 public class UserScreen {
 	
 	private static Scanner sc = new Scanner(System.in);
 	private static Logger logger = Logger.getLogger(UserScreen.class);
+	private static NumberFormat toCurrency = NumberFormat.getCurrencyInstance();
 	
 	private static int invalidOptionCounter = 0;
 	//private static int invalidPwdCounter = 0;    //make number of tries for password!
+	
+	static String inputedUsername = null;
 	
 	public static void app() {
 		logger.info("User started the app");
@@ -26,11 +27,11 @@ public class UserScreen {
 	public static void login() {
 		logger.info("User login started");
 		System.out.print("Please enter your username: ");
-		String inputedUserID = sc.nextLine();
-		if(inputedUserID.equals(Username.getUserID())) {
+		inputedUsername = sc.nextLine();
+		if(inputedUsername.equals(Transactions.pullUsername(inputedUsername))) {
 			System.out.print("Please enter your password: ");
 			String inputedUserPwd = sc.nextLine();
-			if(inputedUserPwd.equals(Password.getUserPwd())) {
+			if(inputedUserPwd.equals(Transactions.pullUserpwd(inputedUsername))) {
 				System.out.println("");
 				System.out.println("Login successful!");
 				System.out.println("");
@@ -60,15 +61,16 @@ public class UserScreen {
 		
 		switch(userOption) {
 		case "1": //show balance
-			System.out.println("Your balance is: $" + Balance.currentBalance());
+			System.out.println("Your balance is: " + toCurrency.format(Transactions.viewBalance(inputedUsername)));
 			System.out.println("");
-			logger.info("User viewed balance of " + Balance.currentBalance());
+			logger.info("User viewed balance of " + toCurrency.format(Transactions.viewBalance(inputedUsername)));
 			break;
 		case "2":  //withdraw
 			System.out.print("Enter amount to withdraw: $");
 			double withdrawAmt = Double.parseDouble(sc.nextLine());
-			Withdraw.withdraw(withdrawAmt);
-			System.out.println("Your balance after withdraw is: $" + Balance.currentBalance());
+			toCurrency.format(withdrawAmt);
+			Transactions.withdraw(withdrawAmt, inputedUsername);
+			System.out.println("Your balance after withdraw is: " + toCurrency.format(Transactions.viewBalance(inputedUsername)));
 			System.out.println("");
 			logger.info("User made a withdrawal of " + withdrawAmt);
 			break;
@@ -76,8 +78,9 @@ public class UserScreen {
 			System.out.print("Enter amount to deposit: $");
 			//double depositAmt = sc.nextDouble(); //the loop that breaks invalid option counter
 			double depositAmt = Double.parseDouble(sc.nextLine());
-			Deposit.deposit(depositAmt);
-			System.out.println("Your balance after deposit is: $" + Balance.currentBalance());
+			toCurrency.format(depositAmt);
+			Transactions.deposit(depositAmt, inputedUsername);
+			System.out.println("Your balance after deposit is: " + toCurrency.format(Transactions.viewBalance(inputedUsername)));
 			System.out.println("");
 			logger.info("User made a deposit of " + depositAmt);
 			break;

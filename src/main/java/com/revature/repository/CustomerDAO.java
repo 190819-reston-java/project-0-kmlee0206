@@ -6,9 +6,13 @@ import com.revature.model.Customer;
 
 public interface CustomerDAO {
 	
-	Customer getCustomer(long id);
+	Customer getCustomer(String username);
 	
-	Customer getCustomer(String name);
+	boolean updateCustomer(Customer c);
+	
+	//Customer getCustomer(String name);
+	
+	//Customer getCustomerBalance(String username);
 	
 	List<Customer> getCustomer();
 	
