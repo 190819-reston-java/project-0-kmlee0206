@@ -14,7 +14,7 @@ public class UserScreen {
 	private static NumberFormat toCurrency = NumberFormat.getCurrencyInstance();
 	
 	private static int invalidOptionCounter = 0;
-	//private static int invalidPwdCounter = 0;    //make number of tries for password!
+	private static int invalidPwdCounter = 0;
 	
 	static String inputedUsername = null;
 	
@@ -26,18 +26,34 @@ public class UserScreen {
 	//Used nested if, is that efficient or okay?
 	public static void login() {
 		logger.info("User login started");
+		System.out.println("-------Welcome to KM Banking!-------");
 		System.out.print("Please enter your username: ");
 		inputedUsername = sc.nextLine();
 		if(inputedUsername.equals(Transactions.pullUsername(inputedUsername))) {
-			System.out.print("Please enter your password: ");
-			String inputedUserPwd = sc.nextLine();
-			if(inputedUserPwd.equals(Transactions.pullUserpwd(inputedUsername))) {
-				System.out.println("");
-				System.out.println("Login successful!");
-				System.out.println("");
-				menu();
-			} else {
-				System.out.println("Wrong password!");
+			while (invalidPwdCounter < 3) {
+				System.out.print("Please enter your password: ");
+				String inputedUserPwd = sc.nextLine();
+				if(inputedUserPwd.equals(Transactions.pullUserpwd(inputedUsername))) {
+					System.out.println("");
+					System.out.println("Login successful!");
+					System.out.println("");
+					logger.info("User successfully logged in");
+					menu();
+				} else {
+					invalidPwdCounter++;
+					if (invalidPwdCounter == 3) {
+						System.out.println("");
+						System.out.println("You have failed to enter you password 3 times!");
+						System.out.println("Exiting the app!");
+						logger.debug("User entered wrong password 3 times, app terminated");
+					} else {
+						System.out.println("");
+						System.out.println("Wrong password!");
+						System.out.println("You have " + (3-invalidPwdCounter) + " attemps left");
+						System.out.println("");
+						logger.debug("User entered wrong password " + invalidPwdCounter + " time(s)");
+					}
+				}
 			}
 		} else {
 			System.out.println("Can't find that username!");
@@ -46,7 +62,7 @@ public class UserScreen {
 	
 	public static void menu() {
 		logger.info("Menu started");
-		System.out.println("-------Welcome to KM Banking!-------");
+		System.out.println("-------" + "Hello, " + Transactions.pullName(inputedUsername) + "-------");
 		System.out.println("Please select an option below:");
 		System.out.println("1 - View my balance");
 		System.out.println("2 - Withdraw");
@@ -85,24 +101,25 @@ public class UserScreen {
 			logger.info("User made a deposit of " + depositAmt);
 			break;
 		case "4":
+			logger.info("User exited out of the menu");
 			System.out.println("Goodbye");
 			System.exit(0);
-			logger.info("User exited out of the menu");
 			break;
 		default:
 			System.out.println("Invalid option!");
 			invalidOptionCounter++;
-			logger.debug("User entered an invalid option: " + userOption);
-			logger.debug("User inputed invalid option " + invalidOptionCounter + " times");
 			
-			System.out.println("You have " + (5 - invalidOptionCounter) + " attempts left before app crashes!");
-			System.out.println("");
-			
-			if(invalidOptionCounter > 4) {
+			if(invalidOptionCounter == 5) {
 				System.out.println("You have entered invalid option 5 times, exiting the app!");
 				logger.fatal("Failed to recognize user's option 5 times, exiting");
 				System.exit(1);
+			} else {
+				logger.debug("User entered an invalid option: " + userOption);
+				logger.debug("User inputed invalid option " + invalidOptionCounter + " times");
+				System.out.println("You have " + (5 - invalidOptionCounter) + " attempts left before app crashes!");
+				System.out.println("");
 			}
+			
 			break;
 		}
 		menu();

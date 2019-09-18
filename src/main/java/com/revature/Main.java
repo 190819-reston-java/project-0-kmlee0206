@@ -13,18 +13,5 @@ public class Main {
 
 		UserScreen.app();
 		
-		//CustomerDAO customerDAO = new CustomerDAOImplPJDBC();
-		
-		//System.out.println(customerDAO.getCustomer("johnsmith"));
-		
-		//Customer yoATestCustomer = customerDAO.getCustomer("johnsmith");
-		
-		//System.out.println(yoATestCustomer.getBalance());
-		
-		//System.out.println(customerDAO.getCustomerBalance("johnsmith"));
-		
-		//UserScreen.menu();
-		
-		
 	}
 }
