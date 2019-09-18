@@ -8,13 +8,12 @@ import com.revature.repository.CustomerDAOImplPJDBC;
 
 public class Transactions {
 	
+	private Customer username;
 	public Transactions(CustomerDAO customerDAO) {
 		Transactions.customerDAO = customerDAO;
 		this.username = new Customer(0L, "Dumbo", "testdummy", "passtest", 100.00);
 	}
 	
-	private Customer username;
-
 	static CustomerDAO customerDAO = new CustomerDAOImplPJDBC();
 
 	public static String pullName(String username) {
