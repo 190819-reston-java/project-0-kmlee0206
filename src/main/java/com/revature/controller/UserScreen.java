@@ -23,7 +23,6 @@ public class UserScreen {
 		login();
 	}
 	
-	//Used nested if, is that efficient or okay?
 	public static void login() {
 		logger.info("User login started");
 		System.out.println("-------Welcome to KM Banking!-------");
@@ -76,12 +75,12 @@ public class UserScreen {
 		System.out.println("");
 		
 		switch(userOption) {
-		case "1": //show balance
+		case "1":
 			System.out.println("Your balance is: " + toCurrency.format(Transactions.viewBalance(inputedUsername)));
 			System.out.println("");
 			logger.info("User viewed balance of " + toCurrency.format(Transactions.viewBalance(inputedUsername)));
 			break;
-		case "2":  //withdraw
+		case "2":
 			System.out.print("Enter amount to withdraw: $");
 			double withdrawAmt = Double.parseDouble(sc.nextLine());
 			toCurrency.format(withdrawAmt);
@@ -90,9 +89,8 @@ public class UserScreen {
 			System.out.println("");
 			logger.info("User made a withdrawal of " + withdrawAmt);
 			break;
-		case "3": //deposit
+		case "3":
 			System.out.print("Enter amount to deposit: $");
-			//double depositAmt = sc.nextDouble(); //the loop that breaks invalid option counter
 			double depositAmt = Double.parseDouble(sc.nextLine());
 			toCurrency.format(depositAmt);
 			Transactions.deposit(depositAmt, inputedUsername);

@@ -62,41 +62,6 @@ public class CustomerDAOImplPJDBC implements CustomerDAO {
 		
 		return true;
 	}
-
-//	@Override
-//	public Customer getCustomer(String name) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-	
-//	@Override
-//	public Customer getCustomerBalance(String username) {
-//		Customer customer = null;
-//		
-//		try (Connection conn = ConnectionUtil.getConnection()) {
-//			String query = "SELECT balance FROM public.customer WHERE username = ?;";
-//			try (PreparedStatement stmt = conn.prepareStatement(query)) {
-//				stmt.setString(1, username);
-//				if (stmt.execute()) {
-//					try (ResultSet resultSet = stmt.getResultSet()) {
-//						if (resultSet.next()) {
-//							customer = createCustomerFromRS(resultSet);
-//						}
-//					}
-//				}
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return customer;
-//	}
-
-//	@Override
-//	public List<Customer> getCustomer() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 	
 	private Customer createCustomerFromRS(ResultSet resultSet) throws SQLException {
 		return new Customer(

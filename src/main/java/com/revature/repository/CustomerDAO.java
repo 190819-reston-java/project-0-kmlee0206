@@ -10,10 +10,4 @@ public interface CustomerDAO {
 	
 	boolean updateCustomer(Customer c);
 	
-	//Customer getCustomer(String name);
-	
-	//Customer getCustomerBalance(String username);
-	
-	//List<Customer> getCustomer();
-	
 }
