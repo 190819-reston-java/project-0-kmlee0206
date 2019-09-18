@@ -7,53 +7,60 @@ import com.revature.repository.CustomerDAO;
 import com.revature.repository.CustomerDAOImplPJDBC;
 
 public class Transactions {
+	
+	public Transactions(CustomerDAO customerDAO) {
+		Transactions.customerDAO = customerDAO;
+		this.username = new Customer(0L, "Dumbo", "testdummy", "passtest", 100.00);
+	}
+	
+	private Customer username;
 
-		static CustomerDAO customerDAO = new CustomerDAOImplPJDBC();
-		
-		public static String pullName(String username) {
-			Customer customer = customerDAO.getCustomer(username);
-			return customer.getName();
+	static CustomerDAO customerDAO = new CustomerDAOImplPJDBC();
+
+	public static String pullName(String username) {
+		Customer customer = customerDAO.getCustomer(username);
+		return customer.getName();
+	}
+
+	public static String pullUsername(String username) {
+		Customer customer = customerDAO.getCustomer(username);
+		return customer.getUsername();
+	}
+
+	public static String pullUserpwd(String username) {
+		Customer customer = customerDAO.getCustomer(username);
+		return customer.getUserpwd();
+	}
+
+	public static double viewBalance(String username) {
+		Customer customer = customerDAO.getCustomer(username);
+		return customer.getBalance();
+	}
+
+	public static void deposit(double depositAmt, String username) {
+		Customer customer = customerDAO.getCustomer(username);
+		if (depositAmt < 0) {
+			throw new NegativeCurrencyException();
 		}
-		
-		public static String pullUsername(String username) {
-			Customer customer = customerDAO.getCustomer(username);
-			return customer.getUsername();
+
+		double finalBalance = (customer.getBalance() + depositAmt);
+		customer.setBalance(finalBalance);
+		customerDAO.updateCustomer(customer);
+
+	}
+
+	public static void withdraw(double withdrawAmt, String username) {
+		Customer customer = customerDAO.getCustomer(username);
+		if (withdrawAmt < 0) {
+			throw new NegativeCurrencyException();
 		}
-		
-		public static String pullUserpwd(String username) {
-			Customer customer = customerDAO.getCustomer(username);
-			return customer.getUserpwd();
+		if (withdrawAmt > customer.getBalance()) {
+			throw new OverdraftProtectionException();
 		}
-		
-		public static double viewBalance(String username) {
-			Customer customer = customerDAO.getCustomer(username);
-			return customer.getBalance();
-		}
-		
-		public static void deposit(double depositAmt, String username) {
-			Customer customer = customerDAO.getCustomer(username);
-			if(depositAmt < 0) {
-				throw new NegativeCurrencyException();
-			}
-			
-			double finalBalance = (customer.getBalance() + depositAmt);
-			customer.setBalance(finalBalance);
-			customerDAO.updateCustomer(customer);
-			
-		}
-		
-		public static void withdraw(double withdrawAmt, String username) {
-			Customer customer = customerDAO.getCustomer(username);
-			if(withdrawAmt < 0) {
-				throw new NegativeCurrencyException();
-			}
-			if(withdrawAmt > customer.getBalance()) {
-				throw new OverdraftProtectionException();
-			}
-			double finalBalance = (customer.getBalance() - withdrawAmt);
-			customer.setBalance(finalBalance);
-			customerDAO.updateCustomer(customer);
-			
-		}
-		
+		double finalBalance = (customer.getBalance() - withdrawAmt);
+		customer.setBalance(finalBalance);
+		customerDAO.updateCustomer(customer);
+
+	}
+
 }

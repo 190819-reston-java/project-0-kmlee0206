@@ -1,6 +1,6 @@
 package com.revature.repository;
 
-import java.util.List;
+//import java.util.List;
 
 import com.revature.model.Customer;
 
@@ -14,6 +14,6 @@ public interface CustomerDAO {
 	
 	//Customer getCustomerBalance(String username);
 	
-	List<Customer> getCustomer();
+	//List<Customer> getCustomer();
 	
 }

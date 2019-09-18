@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+//import java.util.List;
 
 import com.revature.model.Customer;
 import com.revature.utils.ConnectionUtil;
@@ -92,11 +92,11 @@ public class CustomerDAOImplPJDBC implements CustomerDAO {
 //		return customer;
 //	}
 
-	@Override
-	public List<Customer> getCustomer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public List<Customer> getCustomer() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	
 	private Customer createCustomerFromRS(ResultSet resultSet) throws SQLException {
 		return new Customer(
