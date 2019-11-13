@@ -4,7 +4,7 @@ import java.text.NumberFormat;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
 
-
+import com.revature.model.Customer;
 import com.revature.service.Transactions;
 
 public class UserScreen {
